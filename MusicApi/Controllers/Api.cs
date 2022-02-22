@@ -4,20 +4,15 @@ using System.Collections.Generic;
 
 namespace MusicApi.Controllers
 {
-    public class Api
+    [ApiController]
+    [Route("[controller]")]
+    public class Api : ControllerBase
     {
-        [ApiController]
-        [Route("[controller]")]
-        public class WeatherForecastController : ControllerBase
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<string>))]
+        public IActionResult Get()
         {
-
-            [HttpGet]
-            [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<string>))]
-
-            public IActionResult Get()
-            {
-                return Ok(new string[] { "Hallo", "Welt", "!" });
-            }
+            return Ok(new string[] { "Hallo", "Welt", "!" });
         }
     }
 }
