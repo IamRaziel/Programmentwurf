@@ -10,7 +10,7 @@ using System.Text;
 
 namespace MusicApi.Backend.SourceApi.Spotify
 {
-    public class SpotifyApi
+    public class SpotifyApi : IApi
     {
         private HttpWebRequest webRequest;
 
@@ -25,6 +25,19 @@ namespace MusicApi.Backend.SourceApi.Spotify
             }
             var trackJson = JsonConvert.DeserializeObject<GetTrackJson>(response);
             return BuildTrack(trackJson);
+        }
+
+        public IPlaylist GetPlaylist(string id)
+        {
+            string endpoint = SpotifyEndpoints.GET_ALBUM_TRACKS;
+            endpoint = endpoint.Replace("{id}", id);
+            string response = Get(endpoint);
+            if (response == null)
+            {
+                return null;
+            }
+            var albumTracksJson = JsonConvert.DeserializeObject<GetAlbumTracksJson>(response);
+            return null;
         }
 
         private string Get(string endpoint)
