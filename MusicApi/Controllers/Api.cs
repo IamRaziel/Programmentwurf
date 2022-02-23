@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MusicApi.Backend;
-using System.Collections.Generic;
+using MusicApi.Backend.Music;
 
 
 
@@ -12,10 +12,10 @@ namespace MusicApi.Controllers
     public class Api : ControllerBase
     {
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<string>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ITrack))]
         public IActionResult Get()
         {
-            return Ok(new string[] { BackendController.GetTrack() });
+            return Ok(BackendController.GetTrack());
         }
     }
 }

@@ -1,12 +1,14 @@
-﻿using MusicApi.Backend.SourceApi;
+﻿using MusicApi.Backend.Music;
+using MusicApi.Backend.SourceApi;
 
 namespace MusicApi.Backend
 {
     public static class BackendController
     {
-        public static string GetTrack()
+        private static SpotifyApi api = new SpotifyApi();
+         
+        public static ITrack GetTrack()
         {
-            var api = new SpotifyApi();
             return api.GetTrack("11dFghVXANMlKmJXsNCbNl");
         }
     }
