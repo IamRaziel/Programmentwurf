@@ -15,7 +15,7 @@ namespace MusicApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ITrack))]
         public IActionResult Get()
         {
-            return Ok(BackendController.GetTrack());
+            return Ok(BackendController.GetTrack("11dFghVXANMlKmJXsNCbNl"));
         }
     }
 }
