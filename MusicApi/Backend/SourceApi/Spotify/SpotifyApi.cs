@@ -1,5 +1,5 @@
 ﻿using MusicApi.Backend.Music;
-using MusicApi.Backend.SourceApi.Json;
+using MusicApi.Backend.SourceApi.Spotify.Json;
 using MusicApi.Model;
 using Newtonsoft.Json;
 using System;
@@ -8,7 +8,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 
-namespace MusicApi.Backend.SourceApi
+namespace MusicApi.Backend.SourceApi.Spotify
 {
     public class SpotifyApi
     {

@@ -1,5 +1,5 @@
 ﻿using MusicApi.Backend.Music;
-using MusicApi.Backend.SourceApi;
+using MusicApi.Backend.SourceApi.Spotify;
 
 namespace MusicApi.Backend
 {

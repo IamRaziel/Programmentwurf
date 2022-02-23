@@ -1,4 +1,4 @@
-﻿namespace MusicApi.Backend.SourceApi.Json
+﻿namespace MusicApi.Backend.SourceApi.Spotify.Json
 {
     public class ExternalIdsJson
     {

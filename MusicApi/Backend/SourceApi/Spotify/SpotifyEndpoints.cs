@@ -1,4 +1,4 @@
-﻿namespace MusicApi.Backend.SourceApi
+﻿namespace MusicApi.Backend.SourceApi.Spotify
 {
     public static class SpotifyEndpoints
     {
