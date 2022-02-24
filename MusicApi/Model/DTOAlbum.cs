@@ -6,19 +6,19 @@ namespace MusicApi.Model
 {
     public class DTOAlbum : DTOPlaylist, IAlbum
     {
-        private string genre;
+        private IList<string> genres;
         private IList<string> artists;
 
-        public DTOAlbum(string id, string name, string image, IList<ITrack> tracks, string genre, IList<string> artists) : base(id, name, image, tracks)
+        public DTOAlbum(string id, string name, string image, IList<ITrack> tracks, IList<string> genre, IList<string> artists) : base(id, name, image, tracks)
         {
-            Genre = genre;
+            Genres = genre;
             Artists = artists;
         }
 
-        public string Genre
+        public IList<string> Genres
         {
-            get { return genre; }
-            set { genre = value; }
+            get { return genres; }
+            set { genres = value; }
         }
 
         public IList<string> Artists
