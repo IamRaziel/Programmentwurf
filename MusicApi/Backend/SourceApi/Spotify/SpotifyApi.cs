@@ -29,6 +29,12 @@ namespace MusicApi.Backend.SourceApi.Spotify
 
         public IPlaylist GetPlaylist(string id)
         {
+            //TODO
+            return null;
+        }
+
+        public IAlbum GetAlbum(string id)
+        {
             string endpoint = SpotifyEndpoints.GET_ALBUM_TRACKS;
             endpoint = endpoint.Replace("{id}", id);
             string response = Get(endpoint);
@@ -37,6 +43,7 @@ namespace MusicApi.Backend.SourceApi.Spotify
                 return null;
             }
             var albumTracksJson = JsonConvert.DeserializeObject<GetAlbumTracksJson>(response);
+            //TODO
             return null;
         }
 

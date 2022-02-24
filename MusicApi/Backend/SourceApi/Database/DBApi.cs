@@ -17,10 +17,25 @@ namespace MusicApi.Backend.SourceApi.Database
             BuildPlaylists();
             BuildTracks();
         }
-        
-        public IPlaylist GetPlaylist(string id)
+
+        public IAlbum GetAlbum(string id)
         {
             return null;
+        }
+
+        public bool WriteAlbum(IAlbum album)
+        {
+            return false;
+        }
+
+        public bool UpdateAlbum(IAlbum album)
+        {
+            return false;
+        }
+
+        public bool RemoveAlbum(IAlbum album)
+        {
+            return false;
         }
 
         public ITrack GetTrack(string id)
@@ -41,6 +56,11 @@ namespace MusicApi.Backend.SourceApi.Database
         public bool RemoveTrack(ITrack track)
         {
             return false;
+        }
+
+        public IPlaylist GetPlaylist(string id)
+        {
+            return null;
         }
 
         public bool WritePlaylist(IPlaylist playlist)

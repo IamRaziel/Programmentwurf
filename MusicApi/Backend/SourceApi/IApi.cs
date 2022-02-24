@@ -7,5 +7,7 @@ namespace MusicApi.Backend.SourceApi
         ITrack GetTrack(string id);
 
         IPlaylist GetPlaylist(string id);
+
+        IAlbum GetAlbum(string id);
     }
 }
