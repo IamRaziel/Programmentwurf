@@ -44,7 +44,7 @@ namespace MusicApi.Backend.SourceApi.Spotify
             }
             var albumTracksJson = JsonConvert.DeserializeObject<GetAlbumTracksJson>(response);
             //TODO
-            return null;
+            return BuildAlbum(albumTracksJson);
         }
 
         private string Get(string endpoint)
@@ -102,6 +102,81 @@ namespace MusicApi.Backend.SourceApi.Spotify
             }
 
             return ModelFactory.BuildTrack(id, title, images, duration, artists, albumID);
+        }
+
+        private IAlbum BuildAlbum(GetAlbumTracksJson albumTracksJson)
+        {
+            if (albumTracksJson == null)
+            {
+                return null;
+            }
+
+            int i = albumTracksJson.images.Length - 1;
+
+            string image = albumTracksJson.images[i].url;
+            string id = albumTracksJson.id;
+            string name = albumTracksJson.name;
+            IList<ITrack> tracks = BuildTracksFromAlbum(albumTracksJson);
+            IList<string> genres = BuildGenres(albumTracksJson.genres);
+            IList<string> artists = BuildArtists(albumTracksJson.artists);
+
+            return ModelFactory.BuildAlbum(id, name, image, tracks, genres, artists);
+        }
+
+        private IList<ITrack> BuildTracksFromAlbum(GetAlbumTracksJson albumTracksJson)
+        {
+            IList <ITrack> tracks = new List<ITrack>();
+            var tracksJson = albumTracksJson.tracks;
+            if (tracksJson != null)
+            {
+                var items = tracksJson.items;
+                if (items != null && items.Length > 0)
+                {
+                    foreach (var each in items)
+                    {
+                        string id = each.id;
+                        string title = each.name;
+                        IList<string> images = new List<string>();
+                        foreach (var image in albumTracksJson.images)
+                        {
+                            images.Add(image.url);
+                        }
+                        int duration = each.duration_ms;
+                        IList<string> artists = BuildArtists(each.artists);
+
+                        var track = ModelFactory.BuildTrack(id, title, images, duration, artists, albumTracksJson.id);
+                        tracks.Add(track);
+                    }
+                }
+            }
+            return tracks;
+        }
+
+        private IList<string> BuildGenres(object[] genreJsons)
+        {
+            IList<string> genres = new List<string>();
+            if (genreJsons != null && genreJsons.Length > 0)
+            {
+                //TODO
+                //foreach (var each in genreJsons)
+                //{
+                //
+                //}
+            }
+            return genres;
+        }
+
+        private IList<string> BuildArtists(ArtistJson[] artistJsons)
+        {
+            IList<string> artists = new List<string>();
+            if (artistJsons == null && artistJsons.Length > 0)
+            {
+                foreach (var each in artistJsons)
+                {
+                    artists.Add(each.name);
+                }
+            }
+            return artists;
         }
     }
 }
