@@ -9,7 +9,7 @@ namespace MusicApi.Backend.Music
 
         public string Title { get; }
 
-        public IList<string> Images { get; }
+        public string Image { get; }
 
         public int Duration { get; }
 
