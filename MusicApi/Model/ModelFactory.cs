@@ -29,5 +29,10 @@ namespace MusicApi.Model
         {
             return new DTOPlaylist(id, name, image, tracks);
         }
+
+        public static IAlbum BuildAlbum(string id, string name, string image, IList<ITrack> tracks, string genre, IList<string> artists)
+        {
+            return new DTOAlbum(id, name, image, tracks, genre, artists);
+        }
     }
 }
