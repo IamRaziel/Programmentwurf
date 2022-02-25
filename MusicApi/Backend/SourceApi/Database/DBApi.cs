@@ -7,14 +7,19 @@ namespace MusicApi.Backend.SourceApi.Database
     //
     //DB CONNECTION IS NOT PART OF THIS PROJECT
     //
+    //ANYWAY THIS IMPLEMENTATION WILL HAVE THE SAME FUNCTIONALITY IF IT CONNECTED TO AN DB
+    //
     public class DBApi : IDBConnection
     {
+        // THIS VARIABLES WONT BE NEEDED FOR REAL DB
         private IDictionary<string, ITrack> tracks;
         private IDictionary<string, IAlbum> albums;
         private IDictionary<string, IPlaylist> playlists;
      
         public DBApi()
         {
+            //CONNECTION TO DB WOULD BE ESTABLISHED HERE
+
             BuildAlbums();
             BuildTracks();
             BuildPlaylists();
@@ -110,6 +115,7 @@ namespace MusicApi.Backend.SourceApi.Database
             return playlists.ContainsKey(id) ? playlists.Remove(id) : false;
         }
 
+        //THIS FUNCTIONS WONT BE NEEDED FOR REAL DB
         private void BuildTracks()
         {
             ITrack CUT_TO_THE_FEELING = ModelFactory.BuildTrack("11dFghVXANMlKmJXsNCbNl", "Cut To The Feeling", null, 0, null, null);
@@ -125,7 +131,14 @@ namespace MusicApi.Backend.SourceApi.Database
 
         private void BuildAlbums()
         {
-            albums = new Dictionary<string, IAlbum>();
+            IAlbum a;
+
+            albums = new Dictionary<string, IAlbum>(
+                new KeyValuePair<string, IAlbum>[]
+                {
+
+                }
+            );
 
         }
 
