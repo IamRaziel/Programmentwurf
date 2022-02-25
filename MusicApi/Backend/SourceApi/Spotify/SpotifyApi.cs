@@ -35,7 +35,7 @@ namespace MusicApi.Backend.SourceApi.Spotify
 
         public IAlbum GetAlbum(string id)
         {
-            string endpoint = SpotifyEndpoints.GET_ALBUM_TRACKS;
+            string endpoint = SpotifyEndpoints.GET_ALBUM;
             endpoint = endpoint.Replace("{id}", id);
             string response = Get(endpoint);
             if (response == null)
@@ -43,16 +43,13 @@ namespace MusicApi.Backend.SourceApi.Spotify
                 return null;
             }
             var albumTracksJson = JsonConvert.DeserializeObject<GetAlbumTracksJson>(response);
-            //TODO
             return BuildAlbum(albumTracksJson);
         }
 
         private string Get(string endpoint)
         {
             webRequest = (HttpWebRequest)HttpWebRequest.Create(endpoint);
-            webRequest.Headers.Add("Authorization: Bearer BQBHix0B8wrBhV-bCFmXUrYjijSD85ycT11rvCoywhiqY5-dBMV-JPLMp5CfPnhqSywuijvtMOYnCqcI23A5AXCOpqgxNlX2iS-D2PObZG4mBYRkcW1WKJDAnywVmyezAoBUWPn8GEoABIHx448H4aLqONInMd-Tnj1fjqdTGItfHc7w");
-
-            Console.WriteLine(webRequest.Connection);
+            webRequest.Headers.Add("Authorization: Bearer BQAM_zYMUea6qeuJYzbqChiZ021HY0c58G92NcTHv2Y767W_RQfDjOU8EovU3n5lHN6xKhLlhgsOIm2Qdw7rIwd4Og178yojfsmziq1e73QGO2JAflVeaTHVjlhwdSN62xP4k8HxLTMV75Bzl9hzqgVNrQI2XIinUggfuSzVhWj0hQNG");
 
             string content = null;
             try
@@ -106,28 +103,30 @@ namespace MusicApi.Backend.SourceApi.Spotify
             if (albumTracksJson == null)
             {
                 return null;
+            }          
+
+            string image = null;
+
+            if (albumTracksJson.images != null && albumTracksJson.images.Length > 0)
+            {
+                int i = albumTracksJson.images.Length - 1;
+                image = albumTracksJson.images[i].url;
             }
 
-            int i = albumTracksJson.images.Length - 1;
-
-            string image = albumTracksJson.images[i].url;
             string id = albumTracksJson.id;
             string name = albumTracksJson.name;
-            IList<ITrack> tracks = BuildTracksFromAlbum(albumTracksJson);
+            IList<ITrack> tracks = BuildTracksFromAlbum(albumTracksJson.tracks, image, id);
             IList<string> genres = BuildGenres(albumTracksJson.genres);
             IList<string> artists = BuildArtists(albumTracksJson.artists);
 
             return ModelFactory.BuildAlbum(id, name, image, tracks, genres, artists);
         }
 
-        private IList<ITrack> BuildTracksFromAlbum(GetAlbumTracksJson albumTracksJson)
+        private IList<ITrack> BuildTracksFromAlbum(TracksJson tracksJson, string image, string albumID)
         {
             IList <ITrack> tracks = new List<ITrack>();
-            var tracksJson = albumTracksJson.tracks;
             if (tracksJson != null)
             {
-                int i = albumTracksJson.images.Length - 1;
-                string image = albumTracksJson.images[i].url;
 
                 var items = tracksJson.items;
                 if (items != null && items.Length > 0)
@@ -139,7 +138,7 @@ namespace MusicApi.Backend.SourceApi.Spotify
                         int duration = each.duration_ms;
                         IList<string> artists = BuildArtists(each.artists);
 
-                        var track = ModelFactory.BuildTrack(id, title, image, duration, artists, albumTracksJson.id);
+                        var track = ModelFactory.BuildTrack(id, title, image, duration, artists, albumID);
                         tracks.Add(track);
                     }
                 }
@@ -164,7 +163,7 @@ namespace MusicApi.Backend.SourceApi.Spotify
         private IList<string> BuildArtists(ArtistJson[] artistJsons)
         {
             IList<string> artists = new List<string>();
-            if (artistJsons == null && artistJsons.Length > 0)
+            if (artistJsons != null && artistJsons.Length > 0)
             {
                 foreach (var each in artistJsons)
                 {

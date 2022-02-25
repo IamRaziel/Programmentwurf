@@ -12,10 +12,11 @@ namespace MusicApi.Controllers
     public class Api : ControllerBase
     {
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ITrack))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IAlbum))]
         public IActionResult Get()
         {
-            return Ok(BackendController.GetTrack("11dFghVXANMlKmJXsNCbNl"));
+            //return Ok(BackendController.GetTrack("11dFghVXANMlKmJXsNCbNl"));
+            return Ok(BackendController.GetAlbum("4aawyAB9vmqN3uQ7FjRGTy"));
         }
     }
 }
