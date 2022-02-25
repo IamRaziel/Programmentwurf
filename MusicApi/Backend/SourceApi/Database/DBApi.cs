@@ -45,9 +45,9 @@ namespace MusicApi.Backend.SourceApi.Database
             return false;
         }
 
-        public bool RemoveAlbum(IAlbum album)
+        public bool RemoveAlbum(string id)
         {
-            return albums.ContainsKey(album.ID) ? albums.Remove(album.ID) : false;
+            return albums.ContainsKey(id) ? albums.Remove(id) : false;
         }
 
         public ITrack GetTrack(string id)
@@ -75,9 +75,9 @@ namespace MusicApi.Backend.SourceApi.Database
             return false;
         }
 
-        public bool RemoveTrack(ITrack track)
+        public bool RemoveTrack(string id)
         {
-            return tracks.ContainsKey(track.ID) ? tracks.Remove(track.ID) : false;
+            return tracks.ContainsKey(id) ? tracks.Remove(id) : false;
         }
 
         public IPlaylist GetPlaylist(string id)
@@ -105,9 +105,9 @@ namespace MusicApi.Backend.SourceApi.Database
             return false;
         }
 
-        public bool RemovePlaylist(IPlaylist playlist)
+        public bool RemovePlaylist(string id)
         {
-            return playlists.ContainsKey(playlist.ID) ? playlists.Remove(playlist.ID) : false;
+            return playlists.ContainsKey(id) ? playlists.Remove(id) : false;
         }
 
         private void BuildTracks()

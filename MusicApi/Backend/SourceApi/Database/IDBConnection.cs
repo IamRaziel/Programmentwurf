@@ -8,18 +8,18 @@ namespace MusicApi.Backend.SourceApi.Database
 
         bool UpdateAlbum(IAlbum album);
 
-        bool RemoveAlbum(IAlbum album);
+        bool RemoveAlbum(string id);
 
         bool WriteTrack(ITrack track);
 
         bool UpdateTrack(ITrack track);
 
-        bool RemoveTrack(ITrack track);
+        bool RemoveTrack(string id);
 
         bool WritePlaylist(IPlaylist playlist);
 
         bool UpdatePlaylist(IPlaylist playlist);
 
-        bool RemovePlaylist(IPlaylist playlist);
+        bool RemovePlaylist(string id);
     }
 }
