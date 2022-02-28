@@ -33,16 +33,39 @@ namespace MusicApi.Backend
         {
             if (tracks.ContainsKey(id))
             {
-                return tracks.Remove(id);
+                var track = tracks[id];
+                if (tracks.Remove(id))
+                {
+                    if (db.RemoveTrack(id))
+                    {
+                        return true;
+                    }
+                    tracks.Add(id, track);
+                }
             }
             return false;
         }
 
         public static IPlaylist GetPlaylist(string id)
         {
-            if (!playlists.ContainsKey(id))
-                return null;
-            return playlists[id];
+            return playlists.ContainsKey(id) ? playlists[id] : null;
+        }
+
+        public static bool DeletePlaylist(string id)
+        {
+            if (playlists.ContainsKey(id))
+            {
+                var playlist = playlists[id];
+                if (playlists.Remove(id))
+                {
+                    if (db.RemovePlaylist(id))
+                    {
+                        return true;
+                    }
+                    playlists.Add(id, playlist);
+                }
+            }
+            return false;
         }
 
         public static IPlaylist BuildPlaylist(string name)
@@ -86,7 +109,7 @@ namespace MusicApi.Backend
             return album;
         }
 
-        public static bool RemoveAlbum(string id)
+        public static bool DeleteAlbum(string id)
         {
             if (albums.ContainsKey(id))
             {
@@ -103,19 +126,10 @@ namespace MusicApi.Backend
             return false;
         }
 
-        public static bool DonwloadAlbum(string id)
+        public static bool Download(string url)
         {
-            if (albums.ContainsKey(id))
-            {
-                return false;
-            }
-            var album = spotify.GetAlbum(id);
-            if (album == null)
-            {
-                return false;
-            }
-            albums.Add(album.ID, album);
-            db.WriteAlbum(album);
+            
+
             return true;
         }
     }
