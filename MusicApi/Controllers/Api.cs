@@ -11,11 +11,18 @@ namespace MusicApi.Controllers
     [Route("[controller]")]
     public class Api : ControllerBase
     {
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
+        public IActionResult Post()
+        {
+            return Ok();
+        }
+
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IAlbum))]
         public IActionResult Get()
         {
-            //return Ok(BackendController.GetTrack("11dFghVXANMlKmJXsNCbNl"));
             return Ok(BackendController.GetAlbum("4aawyAB9vmqN3uQ7FjRGTy"));
         }
     }
