@@ -48,7 +48,16 @@ namespace MusicApi.Backend
 
         public static IPlaylist GetPlaylist(string id)
         {
-            return playlists.ContainsKey(id) ? playlists[id] : null;
+            if (playlists.ContainsKey(id))
+            {
+                return playlists[id];
+            }
+            var playlist = spotify.GetPlaylist(id);
+            if (playlist != null)
+            {
+                playlists.Add(playlist.ID, playlist);
+            }
+            return playlist;
         }
 
         public static bool DeletePlaylist(string id)
@@ -129,6 +138,16 @@ namespace MusicApi.Backend
         public static bool Download(string url)
         {
             
+
+            return true;
+        }
+
+        public static bool play()
+        {
+            string url = "";
+
+            var player = new MusicPlayer();
+            player.PlayMp3FromUrl(url);
 
             return true;
         }

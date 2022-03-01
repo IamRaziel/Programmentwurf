@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using MusicApi.Backend;
 
 namespace MusicApi
 {
@@ -18,6 +19,7 @@ namespace MusicApi
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            BackendController.play();
         }
 
         public IConfiguration Configuration { get; }
