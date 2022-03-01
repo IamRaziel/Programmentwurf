@@ -38,6 +38,7 @@
         //PLAYER
 
         //PLAYLISTS
+        public static readonly string GET_PLAYLIST = BASE + "/v1/playlists/{id}";
 
         //SEARCH
 
