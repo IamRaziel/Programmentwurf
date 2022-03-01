@@ -7,7 +7,7 @@
       "applicationUrl": "http://localhost:22686",
       "sslPort": 44377
     }
-  },
+  }/*,
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
@@ -27,5 +27,5 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     }
-  }
+  }*/
 }
