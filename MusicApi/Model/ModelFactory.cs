@@ -8,9 +8,9 @@ namespace MusicApi.Model
     {
         private static ISet<string> playlistIDs = new HashSet<string>();
 
-        public static ITrack BuildTrack(string id, string title, string image, int duration, IList<string> artists, string albumID)
+        public static ITrack BuildTrack(string id, string title, string image, int duration, IList<string> artists, string albumID, string filePath)
         {
-            return new DTOTrack(id, title, image, duration, artists, albumID);
+            return new DTOTrack(id, title, image, duration, artists, albumID, filePath);
         }
 
         //USED TO BUILD NEW PLAYLISTS

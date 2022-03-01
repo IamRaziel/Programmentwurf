@@ -5,7 +5,7 @@ namespace MusicApi.Model
 {
     public class DTOTrack : ITrack
     {
-        public DTOTrack(string id, string title, string image, int duration, IList<string> artists, string albumID)
+        public DTOTrack(string id, string title, string image, int duration, IList<string> artists, string albumID, string filePath)
         {
             ID = id;
             Title = title;
@@ -13,6 +13,7 @@ namespace MusicApi.Model
             Duration = duration;
             Artists = artists;
             AlbumID = albumID;
+            FilePath = filePath;
         }
 
         public string ID { get; set; }
@@ -26,5 +27,7 @@ namespace MusicApi.Model
         public IList<string> Artists { get; set; }
 
         public string AlbumID { get; set; }
+
+        public string FilePath { get; set; }
     }
 }

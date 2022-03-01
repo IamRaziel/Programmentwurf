@@ -53,6 +53,15 @@ namespace MusicApi.Backend.SourceApi.Spotify
             return BuildAlbum(albumTracksJson);
         }
 
+        private string DownloadTrack(string id)
+        {
+            //THIS FUNCTION WOULD DOWNLOAD THE MP3/WAV FILE FROM THE SPOTIFY API IF I COULD DO THIS AND RETURNS THE FILEPATH IN THE LOKAL FILE SYSTEM
+            //
+            //NOW IT WILL RETURN THE BASIC FILE PATH OF NYAN_CAT
+
+            return "Q:/ Dateien / Music / TitleMusik / Nyan Cat.mp3";
+        }
+
         private string Get(string endpoint)
         {
             webRequest = (HttpWebRequest)HttpWebRequest.Create(endpoint);

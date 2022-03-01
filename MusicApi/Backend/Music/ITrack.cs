@@ -16,5 +16,7 @@ namespace MusicApi.Backend.Music
         public IList<string> Artists { get; }
 
         public string AlbumID { get; }
+
+        public string FilePath { get; }
     }
 }
