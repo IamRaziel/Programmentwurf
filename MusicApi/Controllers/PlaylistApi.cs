@@ -25,5 +25,12 @@ namespace MusicApi.Controllers
         {
             return Ok(BackendController.DeletePlaylist(id));
         }
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
+        public IActionResult UpdatePlaylist(string id, string name, string image)
+        {
+            return Ok(BackendController.UpdatePlaylist(id, name, image));
+        }
     }
 }
