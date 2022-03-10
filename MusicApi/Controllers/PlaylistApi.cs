@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MusicApi.Backend;
-using MusicApi.Backend.Music;
+using MusicApi.Model;
 
 namespace MusicApi.Controllers
 {
@@ -13,7 +13,7 @@ namespace MusicApi.Controllers
         //"3cEYpjA9oz9GiPac4AsH4n"
 
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IPlaylist))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DTOPlaylist))]
         public IActionResult GetPlaylist(string id)
         {
             return Ok(BackendController.GetPlaylist(id));
