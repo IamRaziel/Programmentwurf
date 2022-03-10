@@ -125,6 +125,24 @@ namespace MusicApi.Backend
             return playlist;
         }
 
+
+        public static bool UpdatePlaylist(string id, string name, string image)
+        {
+            if (!playlists.ContainsKey(id))
+            {
+                return false;
+            }
+            var playlist = playlists[id];
+            playlist.Name = name;
+            playlist.Image = image;
+            return true;
+        }
+
+        public static IList<ITrack> GetTracksOfPlaylist(string id)
+        {
+            return playlists.ContainsKey(id) ? playlists[id].Tracks : null;
+        }
+
         public static bool AddTrackToPlaylist(string playlistID, string trackID)
         {
             if (!playlists.ContainsKey(playlistID) || !tracks.ContainsKey(trackID))
