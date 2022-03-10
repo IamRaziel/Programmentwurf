@@ -11,6 +11,41 @@ namespace MusicApi.Backend.Music
 
         }
 
+
+        public bool PlayMp3FromBytes(byte[] bytes)
+        {
+            using (Stream ms = new MemoryStream())
+            {
+                ms.Write(bytes, 0, bytes.Length);
+                return PlayMp3FromStream(ms);
+            }
+        }
+
+
+        public bool PlayMp3FromStream(Stream stream)
+        {
+            using (stream)
+            {
+                stream.Position = 0;
+                using (WaveStream blockAlignedStream =
+                    new BlockAlignReductionStream(
+                        WaveFormatConversionStream.CreatePcmStream(
+                            new Mp3FileReader(stream))))
+                {
+                    using (WaveOut waveOut = new WaveOut(WaveCallbackInfo.FunctionCallback()))
+                    {
+                        waveOut.Init(blockAlignedStream);
+                        waveOut.Play();
+                        while (waveOut.PlaybackState == PlaybackState.Playing)
+                        {
+                            System.Threading.Thread.Sleep(100);
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+
         
         public bool PlayMp3FromUrl(string url)
         {
@@ -26,25 +61,8 @@ namespace MusicApi.Backend.Music
                         ms.Write(buffer, 0, read);
                     }
                 }
-
-                ms.Position = 0;
-                using (WaveStream blockAlignedStream =
-                    new BlockAlignReductionStream(
-                        WaveFormatConversionStream.CreatePcmStream(
-                            new Mp3FileReader(ms))))
-                {
-                    using (WaveOut waveOut = new WaveOut(WaveCallbackInfo.FunctionCallback()))
-                    {
-                        waveOut.Init(blockAlignedStream);
-                        waveOut.Play();
-                        while (waveOut.PlaybackState == PlaybackState.Playing)
-                        {
-                            System.Threading.Thread.Sleep(100);
-                        }
-                    }
-                }
+                return PlayMp3FromStream(ms);
             }
-            return true;
         }
     }
 }
