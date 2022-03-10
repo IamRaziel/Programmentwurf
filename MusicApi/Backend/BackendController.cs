@@ -1,16 +1,21 @@
-﻿using MusicApi.Backend.Music;
+﻿using Microsoft.AspNetCore.Http;
+using MusicApi.Backend.Music;
 using MusicApi.Backend.SourceApi;
 using MusicApi.Backend.SourceApi.Database;
 using MusicApi.Backend.SourceApi.Spotify;
 using MusicApi.Model;
+using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace MusicApi.Backend
 {
     public static class BackendController
     {
         private static IApi spotify = new SpotifyApi();
-        private static IDBConnection db = new DBApi();
+        private static DBApi dbApi = new DBApi("Q:/Dateien/Music/");
+        private static IDBConnection db = dbApi;
+        private static IFileWriter fileWriter = dbApi;
         private static IDictionary<string/*ID*/, IPlaylist> playlists = new Dictionary<string, IPlaylist>(); 
         private static IDictionary<string/*ID*/, ITrack> tracks = new Dictionary<string, ITrack>();
         private static IDictionary<string/*ID*/, IAlbum> albums = new Dictionary<string, IAlbum>();
@@ -43,6 +48,42 @@ namespace MusicApi.Backend
                     tracks.Add(id, track);
                 }
             }
+            return false;
+        }
+
+        public static bool UploadTrack(IFormFile file)
+        {
+            try
+            {
+                string name = file.FileName.Replace(@"\\\\", @"\\");
+
+                if (file.Length > 0)
+                {
+                    var memoryStream = new MemoryStream();
+
+                    try
+                    {
+                        file.CopyTo(memoryStream);
+
+                        // Upload check if less than 2mb!
+                        if (memoryStream.Length < 2097152)
+                        {
+                            fileWriter.Write(memoryStream.ToArray(), Path.GetFileName(name));
+                        }
+                    }
+                    finally
+                    {
+                        memoryStream.Close();
+                        memoryStream.Dispose();
+                    }
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
             return false;
         }
 

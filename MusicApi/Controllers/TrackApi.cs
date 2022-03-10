@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MusicApi.Backend;
-using MusicApi.Backend.Music;
+using MusicApi.Model;
 
 namespace MusicApi.Controllers
 {
@@ -12,7 +13,7 @@ namespace MusicApi.Controllers
         //"11dFghVXANMlKmJXsNCbNl"
 
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ITrack))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DTOTrack))]
         public IActionResult GetTrack(string id)
         {
             return Ok(BackendController.GetTrack(id));
@@ -27,9 +28,9 @@ namespace MusicApi.Controllers
 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
-        public IActionResult UploadAudioFile()
+        public IActionResult UploadTrack(IFormFile file)
         {
-            return Ok(true);
+            return Ok(BackendController.UploadTrack(file));
         }
     }
 }
