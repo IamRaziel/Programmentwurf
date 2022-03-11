@@ -6,6 +6,8 @@ namespace MusicApi.Backend.Music
 {
     public class MusicPlayer
     {
+        protected WaveOut waveOut;
+
         public MusicPlayer()
         {
 
@@ -32,7 +34,7 @@ namespace MusicApi.Backend.Music
                         WaveFormatConversionStream.CreatePcmStream(
                             new Mp3FileReader(stream))))
                 {
-                    using (WaveOut waveOut = new WaveOut(WaveCallbackInfo.FunctionCallback()))
+                    using (waveOut = new WaveOut(WaveCallbackInfo.FunctionCallback()))
                     {
                         waveOut.Init(blockAlignedStream);
                         waveOut.Play();
@@ -40,7 +42,9 @@ namespace MusicApi.Backend.Music
                         {
                             System.Threading.Thread.Sleep(100);
                         }
+                        waveOut.Stop();
                     }
+                    waveOut = null;
                 }
             }
             return true;
@@ -63,6 +67,54 @@ namespace MusicApi.Backend.Music
                 }
                 return PlayMp3FromStream(ms);
             }
+        }
+
+        public bool Pause()
+        {
+            using(waveOut)
+            {
+                if (waveOut != null)
+                {
+                    if (waveOut.PlaybackState == PlaybackState.Playing)
+                    {
+                        waveOut.Pause();
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public bool Resume()
+        {
+            using (waveOut)
+            {
+                if (waveOut != null)
+                {
+                    if (waveOut.PlaybackState == PlaybackState.Paused)
+                    {
+                        waveOut.Resume();
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public bool Stop()
+        {
+            using (waveOut)
+            {
+                if (waveOut != null)
+                {
+                    if (waveOut.PlaybackState != PlaybackState.Stopped)
+                    {
+                        waveOut.Stop();
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
     }
 }
