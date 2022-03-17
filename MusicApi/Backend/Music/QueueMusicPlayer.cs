@@ -9,6 +9,11 @@ namespace MusicApi.Backend.Music
         public QueueMusicPlayMode Mode { get; set; }
         public int Position { get; set; }
 
+        public QueueMusicPlayer() : this(new List<ITrack>())
+        {
+        }
+
+
         public QueueMusicPlayer(IList<ITrack> tracks)
         {
             Tracks = new List<ITrack>(tracks);
