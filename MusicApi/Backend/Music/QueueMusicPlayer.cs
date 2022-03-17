@@ -11,7 +11,7 @@ namespace MusicApi.Backend.Music
 
         public QueueMusicPlayer(IList<ITrack> tracks)
         {
-            Tracks = tracks;
+            Tracks = new List<ITrack>(tracks);
             Mode = QueueMusicPlayMode.QUEUE;
         }
 

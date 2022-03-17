@@ -257,12 +257,21 @@ namespace MusicApi.Backend.SourceApi.Database
 
         public bool Write(byte[] bytes, string fileName)
         {
-            
+            throw new System.NotImplementedException();
         }
 
         public bool Write(byte[] bytes, string fileName, string directory)
         {
             throw new System.NotImplementedException();
+        }
+
+        //
+        // For Test Purposes 
+        //
+
+        public IDictionary<string, ITrack> Tracks
+        {
+            get { return tracks; }
         }
     }
 }
