@@ -12,8 +12,10 @@ namespace MusicApi.Backend
 {
     public static class BackendController
     {
+        public static readonly string DEFAULT_DIRECTORY = "Q:/Dateien/Music/";
+
         private static IApi spotify = new SpotifyApi();
-        private static DBApi dbApi = new DBApi("Q:/Dateien/Music/");
+        private static DBApi dbApi = new DBApi(DEFAULT_DIRECTORY);
         private static IDBConnection db = dbApi;
         private static IFileWriter fileWriter = dbApi;
         private static IDictionary<string/*ID*/, IPlaylist> playlists = new Dictionary<string, IPlaylist>(); 
