@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MusicApi.Backend;
 using MusicApi.Backend.Music;
+using MusicApi.Backend.SourceApi.Database;
 using MusicApiTest.Backend;
 using NUnit.Framework;
 
@@ -15,7 +17,7 @@ namespace MusicApiTest
         [SetUp]
         public void Setup()
         {
-            tracks = Constants.DB.Tracks.Values.ToList();
+            tracks = new DBApi(BackendController.DEFAULT_DIRECTORY).Tracks.Values.ToList();
         }
 
         /// <summary>
