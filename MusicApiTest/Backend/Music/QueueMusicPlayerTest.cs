@@ -54,7 +54,7 @@ namespace MusicApiTest
 
             player.AddTracks(new ITrack[] { tracks[0] });
 
-            CheckTracks(moreTracks, tracks);
+            CheckTracks(moreTracks, player.Tracks);
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace MusicApiTest
 
             player.Mode = QueueMusicPlayMode.RANDOM;
 
-            Assert.AreSame(player.Mode, QueueMusicPlayMode.RANDOM, "Mode cant be changed.");
+            Assert.AreEqual(player.Mode, QueueMusicPlayMode.RANDOM, "Mode cant be changed.");
         }
 
         private void CheckTracks(IList<ITrack> tracksToCheck)
@@ -156,7 +156,7 @@ namespace MusicApiTest
             for (int i = 0; i < tracks.Count; i++)
             {
                 string tID = tracks[i].ID;
-                if (i > ttcCount)
+                if (i >= ttcCount)
                 {
                     failed = true;
                     output.AppendLine("At position " + i + " the track with id: " + tID + " is missing.");
