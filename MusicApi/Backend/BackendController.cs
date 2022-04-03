@@ -1,16 +1,23 @@
-﻿using MusicApi.Backend.Music;
+﻿using Microsoft.AspNetCore.Http;
+using MusicApi.Backend.Music;
 using MusicApi.Backend.SourceApi;
 using MusicApi.Backend.SourceApi.Database;
 using MusicApi.Backend.SourceApi.Spotify;
 using MusicApi.Model;
+using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace MusicApi.Backend
 {
     public static class BackendController
     {
+        public static readonly string DEFAULT_DIRECTORY = "Q:/Dateien/Music/";
+
         private static IApi spotify = new SpotifyApi();
-        private static IDBConnection db = new DBApi();
+        private static DBApi dbApi = new DBApi(DEFAULT_DIRECTORY);
+        private static IDBConnection db = dbApi;
+        private static IFileWriter fileWriter = dbApi;
         private static IDictionary<string/*ID*/, IPlaylist> playlists = new Dictionary<string, IPlaylist>(); 
         private static IDictionary<string/*ID*/, ITrack> tracks = new Dictionary<string, ITrack>();
         private static IDictionary<string/*ID*/, IAlbum> albums = new Dictionary<string, IAlbum>();
@@ -43,6 +50,42 @@ namespace MusicApi.Backend
                     tracks.Add(id, track);
                 }
             }
+            return false;
+        }
+
+        public static bool UploadTrack(IFormFile file)
+        {
+            try
+            {
+                string name = file.FileName.Replace(@"\\\\", @"\\");
+
+                if (file.Length > 0)
+                {
+                    var memoryStream = new MemoryStream();
+
+                    try
+                    {
+                        file.CopyTo(memoryStream);
+
+                        // Upload check if less than 2mb!
+                        if (memoryStream.Length < 2097152)
+                        {
+                            fileWriter.Write(memoryStream.ToArray(), Path.GetFileName(name));
+                        }
+                    }
+                    finally
+                    {
+                        memoryStream.Close();
+                        memoryStream.Dispose();
+                    }
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
             return false;
         }
 
@@ -82,6 +125,24 @@ namespace MusicApi.Backend
             var playlist = ModelFactory.BuildPlaylist(name);
             playlists.Add(playlist.ID, playlist);
             return playlist;
+        }
+
+
+        public static bool UpdatePlaylist(string id, string name, string image)
+        {
+            if (!playlists.ContainsKey(id))
+            {
+                return false;
+            }
+            var playlist = playlists[id];
+            playlist.Name = name;
+            playlist.Image = image;
+            return true;
+        }
+
+        public static IList<ITrack> GetTracksOfPlaylist(string id)
+        {
+            return playlists.ContainsKey(id) ? playlists[id].Tracks : null;
         }
 
         public static bool AddTrackToPlaylist(string playlistID, string trackID)

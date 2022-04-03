@@ -9,17 +9,26 @@ namespace MusicApi.Backend.SourceApi.Database
     //
     //ANYWAY THIS IMPLEMENTATION WILL HAVE THE SAME FUNCTIONALITY IF IT CONNECTED TO AN DB
     //
-    public class DBApi : IDBConnection
+    public class DBApi : IDBConnection, IFileWriter
     {
+        private string defaultDirectory;
+
         // THIS VARIABLES WONT BE NEEDED FOR REAL DB
         private IDictionary<string, ITrack> tracks;
         private IDictionary<string, IAlbum> albums;
         private IDictionary<string, IPlaylist> playlists;
         private readonly string DEFAULT_FILE_PATH = "Q:/Dateien/Music/TitleMusik/Nyan Cat.mp3";
 
-
-        public DBApi()
+        public string DefaultDirectory
         {
+            get { return defaultDirectory; }
+            set { defaultDirectory = value; }
+        }
+
+        public DBApi(string defaultDirectory)
+        {
+            DefaultDirectory = defaultDirectory;
+
             //CONNECTION TO DB WOULD BE ESTABLISHED HERE
 
             BuildAlbums();
@@ -240,6 +249,29 @@ namespace MusicApi.Backend.SourceApi.Database
         private void BuildPlaylists()
         {
             playlists = new Dictionary<string, IPlaylist>();
+        }
+
+        //
+        // The functions for the IFileWriter
+        //
+
+        public bool Write(byte[] bytes, string fileName)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public bool Write(byte[] bytes, string fileName, string directory)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        //
+        // For Test Purposes 
+        //
+
+        public IDictionary<string, ITrack> Tracks
+        {
+            get { return tracks; }
         }
     }
 }
