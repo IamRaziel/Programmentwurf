@@ -59,7 +59,7 @@ namespace MusicApi.Backend.SourceApi.Spotify
             //
             //NOW IT WILL RETURN THE BASIC FILE PATH OF NYAN_CAT
 
-            return "Q:/ Dateien / Music / TitleMusik / Nyan Cat.mp3";
+            return "Q:/Dateien/Music/TitleMusik/Nyan Cat.mp3";
         }
 
         private string Get(string endpoint)
