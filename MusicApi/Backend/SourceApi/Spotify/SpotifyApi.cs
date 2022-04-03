@@ -95,6 +95,13 @@ namespace MusicApi.Backend.SourceApi.Spotify
             }
 
             string id = trackJson.id;
+
+            string filePath = DownloadTrack(id);
+            if (filePath == null)
+            {
+                return null;
+            }
+
             string title = trackJson.name;
             string image = null;
             string albumID = null;
@@ -111,7 +118,7 @@ namespace MusicApi.Backend.SourceApi.Spotify
                 artists.Add(each.name);
             }
 
-            return ModelFactory.BuildTrack(id, title, image, duration, artists, albumID);
+            return ModelFactory.BuildTrack(id, title, image, duration, artists, albumID, filePath);
         }
 
         private IPlaylist BuildPlaylist(GetPlaylistJson playlistJson)
@@ -173,12 +180,17 @@ namespace MusicApi.Backend.SourceApi.Spotify
                     foreach (var each in items)
                     {
                         string id = each.id;
-                        string title = each.name;
-                        int duration = each.duration_ms;
-                        IList<string> artists = BuildArtists(each.artists);
 
-                        var track = ModelFactory.BuildTrack(id, title, image, duration, artists, albumID);
-                        tracks.Add(track);
+                        string filePath = DownloadTrack(id);
+                        if (filePath != null)
+                        {
+                            string title = each.name;
+                            int duration = each.duration_ms;
+                            IList<string> artists = BuildArtists(each.artists);
+
+                            var track = ModelFactory.BuildTrack(id, title, image, duration, artists, albumID, filePath);
+                            tracks.Add(track);
+                        }
                     }
                 }
             }
