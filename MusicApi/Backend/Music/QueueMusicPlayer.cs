@@ -11,6 +11,7 @@ namespace MusicApi.Backend.Music
 
         public QueueMusicPlayer() : this(new List<ITrack>())
         {
+            Position = 0;
         }
 
 
@@ -159,6 +160,8 @@ namespace MusicApi.Backend.Music
 
         private bool Contains(ITrack track)
         {
+            if (track == null) return false;
+
             foreach (var each in Tracks)
             {
                 if (each.ID.Equals(track.ID))

@@ -21,6 +21,7 @@ namespace MusicApi.Backend
         private static IDictionary<string/*ID*/, IPlaylist> playlists = new Dictionary<string, IPlaylist>(); 
         private static IDictionary<string/*ID*/, ITrack> tracks = new Dictionary<string, ITrack>();
         private static IDictionary<string/*ID*/, IAlbum> albums = new Dictionary<string, IAlbum>();
+        private static QueueMusicPlayer player = new QueueMusicPlayer();
 
         public static ITrack GetTrack(string id)
         {
@@ -205,12 +206,132 @@ namespace MusicApi.Backend
 
         public static bool play()
         {
-            string url = "";
+            string url = "Q:/Dateien/Music/Hardstyle/Coone/Less Is More/01 Titelnummer 1.mp3";
 
             var player = new MusicPlayer();
             player.PlayMp3FromUrl(url);
 
             return true;
+        }
+
+        public static void AddTracksToQueue(IList<string> trackIDs)
+        {
+            player.AddTracks(GetTracksFromID(trackIDs));
+        }
+
+        public static void AddAlbumsToQueue(IList<string> albumIDs)
+        {
+            
+            player.AddAlbums(GetAlbumsFromID(albumIDs));
+        }
+
+        public static void AddPlaylistsToQueue(IList<string> playlistIDs)
+        {
+            
+            player.AddPlaylists(GetPlaylistsFromID(playlistIDs));
+        }
+
+        public static void RemoveTracksFromQueue(IList<string> trackIDs)
+        {
+            player.RemoveTracks(GetTracksFromID(trackIDs));
+        }
+
+        public static bool MoveTracksInQueue(string trackID, int position)
+        {
+            return player.MoveTrack(GetTrackFromID(trackID), position);
+        }
+
+        public static void SwitchModeOfMusicPlayer()
+        {
+            if (player.Mode == QueueMusicPlayMode.RANDOM)
+            {
+                player.Mode = QueueMusicPlayMode.QUEUE;
+            }
+            else
+            {
+                player.Mode = QueueMusicPlayMode.RANDOM;
+            }
+        }
+
+        public static void NextTrackInQueue()
+        {
+            player.PlayNext();
+        }
+
+        public static void StopMusicPlayer()
+        {
+            player.Stop();
+        }
+
+        public static void ResumeMusicPlayer()
+        {
+            player.Resume();
+        }
+
+        public static IList<IAlbum> GetAlbumsFromID(IList<string> ids)
+        {
+            IList<IAlbum> albumsFromID = new List<IAlbum>();
+            foreach (var each in ids)
+            {
+                var albumFromID = GetAlbumFromID(each);
+                if (albumFromID != null)
+                {
+                    albumsFromID.Add(albumFromID);
+                }
+            }
+            return albumsFromID;
+        }
+
+        public static IList<IPlaylist> GetPlaylistsFromID(IList<string> ids)
+        {
+            IList<IPlaylist> playlistsFromID = new List<IPlaylist>();
+            foreach (var each in ids)
+            {
+                var playlistFromID = GetPlaylistFromID(each);
+                if (playlistFromID != null)
+                {
+                    playlistsFromID.Add(playlistFromID);
+                }
+            }
+            return playlistsFromID;
+        }
+
+        public static IList<ITrack> GetTracksFromID(IList<string> ids)
+        {
+            IList<ITrack> tracksFromID = new List<ITrack>();
+            foreach (var each in ids)
+            {
+                var trackFromID = GetTrackFromID(each);
+                if (trackFromID != null)
+                {
+                    tracksFromID.Add(trackFromID);
+                }
+            }
+            return tracksFromID;
+        }
+
+        public static ITrack GetTrackFromID(string id)
+        {
+            if (string.IsNullOrEmpty(id)) return null;
+            ITrack track = null;
+            if (!tracks.TryGetValue(id, out track)) return null;
+            return track;
+        }
+
+        public static IPlaylist GetPlaylistFromID(string id)
+        {
+            if (string.IsNullOrEmpty(id)) return null;
+            IPlaylist playlist = null;
+            if (!playlists.TryGetValue(id, out playlist)) return null;
+            return playlist;
+        }
+
+        public static IAlbum GetAlbumFromID(string id)
+        {
+            if (string.IsNullOrEmpty(id)) return null;
+            IAlbum album = null;
+            if (!albums.TryGetValue(id, out album)) return null;
+            return album;
         }
     }
 }
