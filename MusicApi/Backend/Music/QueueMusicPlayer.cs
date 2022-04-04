@@ -11,7 +11,6 @@ namespace MusicApi.Backend.Music
 
         public QueueMusicPlayer() : this(new List<ITrack>())
         {
-            Position = 0;
         }
 
 
@@ -19,6 +18,7 @@ namespace MusicApi.Backend.Music
         {
             Tracks = new List<ITrack>(tracks);
             Mode = QueueMusicPlayMode.QUEUE;
+            Position = 0;
         }
 
         public void AddAlbums(IList<IAlbum> albums)
