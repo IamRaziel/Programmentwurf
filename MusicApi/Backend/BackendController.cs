@@ -23,6 +23,22 @@ namespace MusicApi.Backend
         private static IDictionary<string/*ID*/, IAlbum> albums = new Dictionary<string, IAlbum>();
         private static QueueMusicPlayer player = new QueueMusicPlayer();
 
+        public static void LoadMusicFromDB()
+        {
+            foreach (var each in db.GetAlbums())
+            {
+                albums.Add(each.ID, each);
+            }
+            foreach (var each in db.GetTracks())
+            {
+                tracks.Add(each.ID, each);
+            }
+            foreach (var each in db.GetPlaylists())
+            {
+                playlists.Add(each.ID, each);
+            }
+        }
+
         public static ITrack GetTrack(string id)
         {
             if (tracks.ContainsKey(id))

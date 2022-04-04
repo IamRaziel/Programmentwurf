@@ -1,6 +1,7 @@
 ﻿using MusicApi.Backend.Music;
 using MusicApi.Model;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MusicApi.Backend.SourceApi.Database
 {
@@ -36,6 +37,11 @@ namespace MusicApi.Backend.SourceApi.Database
             BuildTracks();
         }
 
+        public IList<IAlbum> GetAlbums()
+        {
+            return albums.Values.ToList();
+        }
+
         public IAlbum GetAlbum(string id)
         {
             return albums.ContainsKey(id) ? albums[id] : null;
@@ -66,6 +72,11 @@ namespace MusicApi.Backend.SourceApi.Database
             return albums.ContainsKey(id) ? albums.Remove(id) : false;
         }
 
+        public IList<ITrack> GetTracks()
+        {
+            return tracks.Values.ToList();
+        }
+
         public ITrack GetTrack(string id)
         {
             return tracks.ContainsKey(id) ? tracks[id] : null;
@@ -94,6 +105,11 @@ namespace MusicApi.Backend.SourceApi.Database
         public bool RemoveTrack(string id)
         {
             return tracks.ContainsKey(id) ? tracks.Remove(id) : false;
+        }
+
+        public IList<IPlaylist> GetPlaylists()
+        {
+            return playlists.Values.ToList();
         }
 
         public IPlaylist GetPlaylist(string id)
