@@ -23,7 +23,8 @@ namespace MusicApi.Backend
         private static IDictionary<string/*ID*/, IAlbum> albums = new Dictionary<string, IAlbum>();
         private static QueueMusicPlayer player = new QueueMusicPlayer();
 
-        public static void LoadMusicFromDB()
+
+        public static (IList<IAlbum>, IList<ITrack>, IList<IPlaylist>) LoadMusicFromDB()
         {
             foreach (var each in db.GetAlbums())
             {
@@ -37,6 +38,7 @@ namespace MusicApi.Backend
             {
                 playlists.Add(each.ID, each);
             }
+            return (db.GetAlbums(), db.GetTracks(), db.GetPlaylists());
         }
 
         public static ITrack GetTrack(string id)
@@ -252,9 +254,9 @@ namespace MusicApi.Backend
             player.AddPlaylists(GetPlaylistsFromID(playlistIDs));
         }
 
-        public static void RemoveTracksFromQueue(IList<string> trackIDs)
+        public static void RemoveTracksFromQueue(ISet<int> positions)
         {
-            player.RemoveTracks(GetTracksFromID(trackIDs));
+            player.RemoveTracksFromPositions(positions);
         }
 
         public static bool MoveTracksInQueue(string trackID, int position)

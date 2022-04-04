@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MusicApi.Backend.Music
 {
@@ -42,6 +43,23 @@ namespace MusicApi.Backend.Music
             foreach (var each in tracks)
             {
                 Tracks.Add(each);
+            }
+        }
+
+        public void RemoveTracksFromPositions(ISet<int> positions)
+        {
+            if (positions != null && positions.Count > 0)
+            {
+                positions = new SortedSet<int>(positions);
+                IList<int> posList = positions.ToList();
+                for (int i = posList.Count - 1; i >= 0; i--)
+                {
+                    int pos = posList[i];
+                    if (pos >= 0 && pos < Tracks.Count)
+                    {
+                        Tracks.RemoveAt(i);
+                    }
+                }
             }
         }
 

@@ -57,9 +57,9 @@ namespace MusicApi.Controllers
         [HttpDelete]
         [Route("remove-tracks")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
-        public IActionResult RemoveTracksFromQueue(IList<string> ids)
+        public IActionResult RemoveTracksFromQueue(ISet<int> positions)
         {
-            BackendController.RemoveTracksFromQueue(ids);
+            BackendController.RemoveTracksFromQueue(positions);
             return Ok(true);
         }
 
@@ -103,7 +103,7 @@ namespace MusicApi.Controllers
         [Route("move")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IList<ITrack>))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public IActionResult StartPlayer(string id, int position)
+        public IActionResult MoveTrackInQueue(string id, int position)
         {
             if (BackendController.MoveTracksInQueue(id, position))
                 return Ok(BackendController.GetTracksOfQueue());
