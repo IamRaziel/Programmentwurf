@@ -34,7 +34,7 @@ namespace MusicApiTest
             player.RemoveTrack(tracks[0]);
             player.RemoveTrack(tracks[length - 1]);
 
-            CheckTracks(subTracks, player.Tracks);
+            Util.CheckTracks(subTracks, player.Tracks);
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace MusicApiTest
 
             player.AddTracks(new ITrack[] { tracks[0] });
 
-            CheckTracks(moreTracks, player.Tracks);
+            Util.CheckTracks(moreTracks, player.Tracks);
         }
 
         /// <summary>
@@ -78,15 +78,15 @@ namespace MusicApiTest
             player = new QueueMusicPlayer(tracks1);
             player.MoveTrack(t1, 2);
 
-            CheckTracks(tracks2, player.Tracks);
+            Util.CheckTracks(tracks2, player.Tracks);
 
             player.MoveTrack(t3, 5);
 
-            CheckTracks(tracks3, player.Tracks);
+            Util.CheckTracks(tracks3, player.Tracks);
 
             player.MoveTrack(t5, 1);
 
-            CheckTracks(tracks4, player.Tracks);
+            Util.CheckTracks(tracks4, player.Tracks);
         }
 
         /// <summary>
