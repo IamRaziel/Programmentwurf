@@ -214,6 +214,11 @@ namespace MusicApi.Backend
             return true;
         }
 
+        public static IList<ITrack> GetTracksOfQueue()
+        {
+            return player.Tracks;
+        }
+
         public static void AddTracksToQueue(IList<string> trackIDs)
         {
             player.AddTracks(GetTracksFromID(trackIDs));
@@ -241,7 +246,7 @@ namespace MusicApi.Backend
             return player.MoveTrack(GetTrackFromID(trackID), position);
         }
 
-        public static void SwitchModeOfMusicPlayer()
+        public static QueueMusicPlayMode SwitchModeOfMusicPlayer()
         {
             if (player.Mode == QueueMusicPlayMode.RANDOM)
             {
@@ -251,6 +256,7 @@ namespace MusicApi.Backend
             {
                 player.Mode = QueueMusicPlayMode.RANDOM;
             }
+            return player.Mode;
         }
 
         public static void NextTrackInQueue()
