@@ -16,7 +16,7 @@ namespace MusicApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DTOTrack))]
         public IActionResult GetTrack(string id)
         {
-            return Ok(BackendController.GetTrack(id));
+            return Ok(BackendController.GetTrackFromUrl(id));
         }
 
         [HttpDelete]

@@ -41,8 +41,10 @@ namespace MusicApi.Backend
             return (db.GetAlbums(), db.GetTracks(), db.GetPlaylists());
         }
 
-        public static ITrack GetTrack(string id)
+        //Needs to be changed to GetTrackFromUrl(string url)
+        public static ITrack GetTrackFromUrl(string id)
         {
+            //TODO
             if (tracks.ContainsKey(id))
             {
                 return tracks[id];
@@ -108,8 +110,10 @@ namespace MusicApi.Backend
             return false;
         }
 
-        public static IPlaylist GetPlaylist(string id)
+        //Needs to be changed to GetPlaylistFromUrl(string url)
+        public static IPlaylist GetPlaylistFromUrl(string id)
         {
+            //TODO
             if (playlists.ContainsKey(id))
             {
                 return playlists[id];
@@ -184,8 +188,10 @@ namespace MusicApi.Backend
             return true;
         }
 
-        public static IAlbum GetAlbum(string id)
+        //Needs to be changed to GetAlbumFromURL(string url)
+        public static IAlbum GetAlbumFromUrl(string id)
         {
+            //TODO
             if (albums.ContainsKey(id))
             {
                 return albums[id];
@@ -277,7 +283,8 @@ namespace MusicApi.Backend
             return player.Mode;
         }
 
-        public static void NextTrackInQueue()
+        //Rename to PlayNextTrackInQueue
+        public static void PlayNextTrackInQueue()
         {
             player.PlayNext();
         }

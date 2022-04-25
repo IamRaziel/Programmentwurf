@@ -15,7 +15,7 @@ namespace MusicApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DTOAlbum))]
         public IActionResult GetAlbum(string id)
         {
-            return Ok(BackendController.GetAlbum(id));
+            return Ok(BackendController.GetAlbumFromUrl(id));
         }
 
         [HttpDelete]

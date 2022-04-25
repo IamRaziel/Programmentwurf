@@ -16,7 +16,7 @@ namespace MusicApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DTOPlaylist))]
         public IActionResult GetPlaylist(string id)
         {
-            return Ok(BackendController.GetPlaylist(id));
+            return Ok(BackendController.GetPlaylistFromUrl(id));
         }
 
         [HttpDelete]

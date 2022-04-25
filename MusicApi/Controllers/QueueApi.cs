@@ -77,7 +77,7 @@ namespace MusicApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
         public IActionResult StartPlayer()
         {
-            BackendController.NextTrackInQueue();
+            BackendController.PlayNextTrackInQueue();
             return Ok(true);
         }
 
