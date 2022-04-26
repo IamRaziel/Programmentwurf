@@ -15,21 +15,21 @@ namespace MusicApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IList<DTOTrack>))]
         public IActionResult GetTracksOfPlaylist(string id)
         {
-            return Ok(BackendController.GetTracksOfPlaylist(id));
+            return Ok(BackendController.PlaylistController.GetTracksOfPlaylist(id));
         }
 
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
         public IActionResult RemoveTrackOfPlaylist(string playlistID, string trackID)
         {
-            return Ok(BackendController.RemoveTrackFromPlaylist(playlistID, trackID));
+            return Ok(BackendController.PlaylistController.RemoveTrackFromPlaylist(playlistID, trackID));
         }
 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
         public IActionResult AddTrackToPlaylist(string playlistID, string trackID)
         {
-            return Ok(BackendController.AddTrackToPlaylist(playlistID, trackID));
+            return Ok(BackendController.PlaylistController.AddTrackToPlaylist(playlistID, trackID));
         }
     }
 }

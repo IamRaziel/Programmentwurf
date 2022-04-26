@@ -30,9 +30,10 @@ namespace MusicApi.Backend
             }
         }
 
-        public bool AddTrackToPlaylist(string playlistID, ITrack track)
+        public bool AddTrackToPlaylist(string playlistID, string trackID)
         {
-            if (!playlists.ContainsKey(playlistID))
+            var track = BackendController.TrackController.GetTrackFromID(trackID);
+            if (!playlists.ContainsKey(playlistID) || track == null)
             {
                 return false;
             }
@@ -107,9 +108,10 @@ namespace MusicApi.Backend
             return playlists.ContainsKey(id) ? playlists[id].Tracks : null;
         }
 
-        public bool RemoveTrackFromPlaylist(string playlistID, ITrack track)
+        public bool RemoveTrackFromPlaylist(string playlistID, string trackID)
         {
-            if (!playlists.ContainsKey(playlistID))
+            var track = BackendController.TrackController.GetTrackFromID(trackID);
+            if (!playlists.ContainsKey(playlistID) || track == null)
             {
                 return false;
             }

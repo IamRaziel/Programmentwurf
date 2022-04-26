@@ -15,18 +15,21 @@ namespace MusicApi.Backend
             db = dbConnection;
         }
 
-        public void AddAlbumsToQueue(IList<IAlbum> albums)
+        public void AddAlbumsToQueue(IList<string> albumIDs)
         {
+            var albums = BackendController.AlbumController.GetAlbumsFromID(albumIDs);
             player.AddAlbums(albums);
         }
 
-        public void AddPlaylistsToQueue(IList<IPlaylist> playlists)
+        public void AddPlaylistsToQueue(IList<string> playlistIDs)
         {
+            var playlists = BackendController.PlaylistController.GetPlaylistsFromID(playlistIDs);
             player.AddPlaylists(playlists);
         }
 
-        public void AddTracksToQueue(IList<ITrack> tracks)
+        public void AddTracksToQueue(IList<string> trackIDs)
         {
+            var tracks = BackendController.TrackController.GetTracksFromID(trackIDs);
             player.AddTracks(tracks);
         }
 
@@ -37,7 +40,8 @@ namespace MusicApi.Backend
 
         public bool MoveTracksInQueue(string trackID, int position)
         {
-            return player.MoveTrack(GetTrackFromID(trackID), position);
+            var track = BackendController.TrackController.GetTrackFromID(trackID);
+            return player.MoveTrack(track, position);
         }
 
         public void PlayNextTrackInQueue()

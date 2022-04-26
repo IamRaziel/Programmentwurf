@@ -15,14 +15,14 @@ namespace MusicApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DTOAlbum))]
         public IActionResult GetAlbum(string id)
         {
-            return Ok(BackendController.GetAlbumFromUrl(id));
+            return Ok(BackendController.AlbumController.GetAlbumFromUrl(id));
         }
 
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
         public IActionResult DeleteAlbum(string id)
         {
-            return Ok(BackendController.DeleteAlbum(id));
+            return Ok(BackendController.AlbumController.DeleteAlbum(id));
         }
     }
 }

@@ -25,7 +25,7 @@ namespace MusicApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IList<ITrack>))]
         public IActionResult GetQueue()
         {
-            return Ok(BackendController.GetTracksOfQueue());
+            return Ok(BackendController.QueueController.GetTracksOfQueue());
         }
 
         [HttpPost]
@@ -33,7 +33,7 @@ namespace MusicApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
         public IActionResult AddTracksToQueue(IList<string> ids)
         {
-            BackendController.AddTracksToQueue(ids);
+            BackendController.QueueController.AddTracksToQueue(ids);
             return Ok(true);
         }
 
@@ -42,7 +42,7 @@ namespace MusicApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
         public IActionResult AddAlbumsToQueue(IList<string> ids)
         {
-            BackendController.AddAlbumsToQueue(ids);
+            BackendController.QueueController.AddAlbumsToQueue(ids);
             return Ok(true);
         }
 
@@ -51,7 +51,7 @@ namespace MusicApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
         public IActionResult AddPlaylistsToQueue(IList<string> ids)
         {
-            BackendController.AddPlaylistsToQueue(ids);
+            BackendController.QueueController.AddPlaylistsToQueue(ids);
             return Ok(true);
         }
 
@@ -60,7 +60,7 @@ namespace MusicApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
         public IActionResult RemoveTracksFromQueue(ISet<int> positions)
         {
-            BackendController.RemoveTracksFromQueue(positions);
+            BackendController.QueueController.RemoveTracksFromQueue(positions);
             return Ok(true);
         }
 
@@ -70,7 +70,7 @@ namespace MusicApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(QueueMusicPlayMode))]
         public IActionResult ChangeMode()
         {
-            return Ok(BackendController.SwitchModeOfMusicPlayer());
+            return Ok(BackendController.QueueController.SwitchModeOfQueue());
         }
 
         [HttpPut]
@@ -78,7 +78,7 @@ namespace MusicApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
         public IActionResult StartPlayer()
         {
-            BackendController.PlayNextTrackInQueue();
+            BackendController.QueueController.PlayNextTrackInQueue();
             return Ok(true);
         }
 
@@ -87,7 +87,7 @@ namespace MusicApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
         public IActionResult StopPlayer()
         {
-            BackendController.StopMusicPlayer();
+            BackendController.QueueController.StopMusicPlayer();
             return Ok(true);
         }
 
