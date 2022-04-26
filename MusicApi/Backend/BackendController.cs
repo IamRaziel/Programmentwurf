@@ -34,7 +34,7 @@ namespace MusicApi.Backend
         {
             albumController = new AlbumController(db);
             playlistController = new PlaylistController(db);
-            queueController = new QueueController(db);
+            queueController = new QueueController();
             trackController = new TrackController(db, fileWriter);
 
             LoadMusicFromDB();

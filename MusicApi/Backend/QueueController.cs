@@ -8,11 +8,10 @@ namespace MusicApi.Backend
     public class QueueController
     {
         private QueueMusicPlayer player = new QueueMusicPlayer();
-        private IDBConnection db;
 
-        public QueueController(IDBConnection dbConnection)
+        public QueueController()
         {
-            db = dbConnection;
+
         }
 
         public void AddAlbumsToQueue(IList<string> albumIDs)
