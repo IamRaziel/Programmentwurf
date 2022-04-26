@@ -19,7 +19,7 @@ namespace MusicApi
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            BackendController.play();
+            BackendController.BuildController()
         }
 
         public IConfiguration Configuration { get; }
