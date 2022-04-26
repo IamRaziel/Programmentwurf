@@ -36,6 +36,21 @@ namespace MusicApi.Backend
             playlistController = new PlaylistController(db);
             queueController = new QueueController(db);
             trackController = new TrackController(db, fileWriter);
+
+            LoadMusicFromDB();
+        }
+
+        public static bool Download(string url)
+        {
+
+
+            return true;
+        }
+
+        public static IApi GetApiFromUrl(string url)
+        {
+            //TODO
+            return spotify;
         }
 
         private static void LoadMusicFromDB()
@@ -43,13 +58,6 @@ namespace MusicApi.Backend
             albumController.AddAlbums(db.GetAlbums());
             playlistController.AddPlaylists(db.GetPlaylists());
             trackController.AddTracks(db.GetTracks());
-        }
-
-        public static bool Download(string url)
-        {
-            
-
-            return true;
         }
     }
 }

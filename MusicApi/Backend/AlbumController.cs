@@ -62,7 +62,8 @@ namespace MusicApi.Backend
             {
                 return albums[id];
             }
-            var album = spotify.GetAlbum(id);
+            var api = BackendController.GetApiFromUrl("");
+            var album = api.GetAlbum(id);
             if (album != null)
             {
                 albums.Add(album.ID, album);

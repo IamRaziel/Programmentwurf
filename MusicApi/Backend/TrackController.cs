@@ -67,7 +67,8 @@ namespace MusicApi.Backend
             {
                 return tracks[id];
             }
-            var track = spotify.GetTrack(id);
+            var api = BackendController.GetApiFromUrl("");
+            var track = api.GetTrack(id);
             if (track != null)
             {
                 tracks.Add(track.ID, track);

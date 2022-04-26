@@ -81,7 +81,8 @@ namespace MusicApi.Backend
             {
                 return playlists[id];
             }
-            var playlist = spotify.GetPlaylist(id);
+            var api = BackendController.GetApiFromUrl("");
+            var playlist = api.GetPlaylist(id);
             if (playlist != null)
             {
                 playlists.Add(playlist.ID, playlist);
