@@ -46,10 +46,10 @@ namespace MusicApiTest.Controller
         [Test]
         public void Test2_LoadMusic()
         {
-            var music = BackendController.LoadMusicFromDB();
-            albums = music.Item1;
-            tracks = music.Item2;
-            playlists = music.Item3;
+            BackendController.BuildController();
+            albums = BackendController.AlbumController.Albums;
+            tracks = BackendController.TrackController.Tracks;
+            playlists = BackendController.PlaylistController.Playlists;
 
             Util.CheckTracks(tracks, dbApi.GetTracks());
             Util.CheckAlbums(albums, dbApi.GetAlbums());
@@ -108,8 +108,8 @@ namespace MusicApiTest.Controller
             // t2, a0t0, t4, a0t1, a0t2, a0t3, a0t4, a0t5, a0t6, a0t7, a0t8, a0t9, a0t10, a0t11, a0t12, a0t13, a0t14, a0t15, a0t16, a0t17, t5, t6
             Util.CheckTracks(subTracks, LoadTracksOfResult());
 
-            Assert.True(BackendController.MoveTracksInQueue(t4.ID, 1), "Reverseing the switch failed.");
-            Assert.True(BackendController.MoveTracksInQueue(a0t0.ID, 1), "Can't switch position of track t4.");
+            Assert.True(BackendController.QueueController.MoveTracksInQueue(t4.ID, 1), "Reverseing the switch failed.");
+            Assert.True(BackendController.QueueController.MoveTracksInQueue(a0t0.ID, 1), "Can't switch position of track t4.");
 
             // t2, a0t0, t4, a0t1, a0t2, a0t3, a0t4, a0t5, a0t6, a0t7, a0t8, a0t9, a0t10, a0t11, a0t12, a0t13, a0t14, a0t15, a0t16, a0t17, t5, t6
             Util.CheckTracks(subTracks, LoadTracksOfResult());
