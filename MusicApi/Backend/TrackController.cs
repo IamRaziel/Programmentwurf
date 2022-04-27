@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Microsoft.AspNetCore.Http;
 using MusicApi.Backend.Music;
 using MusicApi.Backend.SourceApi.Database;
@@ -18,6 +19,8 @@ namespace MusicApi.Backend
             db = dbConnection;
             this.fileWriter = fileWriter;
         }
+
+        public IList<ITrack> Tracks { get { return tracks.Values.ToList(); } }
 
         public void AddTracks(IList<ITrack> tracks)
         {
@@ -88,6 +91,13 @@ namespace MusicApi.Backend
                 }
             }
             return tracksFromID;
+        }
+        public void LoadTracksFromDB()
+        {
+            if (db != null)
+            {
+                AddTracks(db.GetTracks());
+            }
         }
 
         public bool UploadTrack(IFormFile file)

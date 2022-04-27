@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using MusicApi.Backend.Music;
 using MusicApi.Backend.SourceApi.Database;
 
@@ -10,10 +11,12 @@ namespace MusicApi.Backend
         private IDictionary<string, IAlbum> albums = new Dictionary<string, IAlbum>();
         private IDBConnection db;
 
+
         public AlbumController(IDBConnection dbConnection)
         {
             db = dbConnection;
         }
+        public IList<IAlbum> Albums { get { return albums.Values.ToList(); } }
 
         public void AddAlbums(IList<IAlbum> albums)
         {
@@ -84,6 +87,14 @@ namespace MusicApi.Backend
                 }
             }
             return albumsFromID;
+        }
+
+        public void LoadAlbumsFromDB()
+        {
+            if (db != null)
+            {
+                AddAlbums(db.GetAlbums());
+            }
         }
     }
 }

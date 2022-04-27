@@ -55,9 +55,9 @@ namespace MusicApi.Backend
 
         private static void LoadMusicFromDB()
         {
-            albumController.AddAlbums(db.GetAlbums());
-            playlistController.AddPlaylists(db.GetPlaylists());
-            trackController.AddTracks(db.GetTracks());
+            albumController.LoadAlbumsFromDB();
+            playlistController.LoadPlaylistsFromDB();
+            trackController.LoadTracksFromDB();
         }
     }
 }

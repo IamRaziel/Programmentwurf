@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using MusicApi.Backend.Music;
 using MusicApi.Backend.SourceApi.Database;
 using MusicApi.Model;
@@ -15,6 +16,8 @@ namespace MusicApi.Backend
         {
             db = dbConnection;
         }
+
+        public IList<IPlaylist> Playlists { get { return playlists.Values.ToList(); } }
 
         public void AddPlaylists(IList<IPlaylist> playlists)
         {
@@ -107,6 +110,14 @@ namespace MusicApi.Backend
         public IList<ITrack> GetTracksOfPlaylist(string id)
         {
             return playlists.ContainsKey(id) ? playlists[id].Tracks : null;
+        }
+
+        public void LoadPlaylistsFromDB()
+        {
+            if (db != null)
+            {
+                AddPlaylists(db.GetPlaylists());
+            }
         }
 
         public bool RemoveTrackFromPlaylist(string playlistID, string trackID)
