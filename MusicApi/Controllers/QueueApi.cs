@@ -96,7 +96,7 @@ namespace MusicApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
         public IActionResult ResumePlayer()
         {
-            BackendController.ResumeMusicPlayer();
+            BackendController.QueueController.ResumeMusicPlayer();
             return Ok(true);
         }
 
@@ -106,8 +106,8 @@ namespace MusicApi.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult MoveTrackInQueue(string id, int position)
         {
-            if (BackendController.MoveTracksInQueue(id, position))
-                return Ok(BackendController.GetTracksOfQueue());
+            if (BackendController.QueueController.MoveTracksInQueue(id, position))
+                return Ok(BackendController.QueueController.GetTracksOfQueue());
             return StatusCode(StatusCodes.Status500InternalServerError);
         }
     }
